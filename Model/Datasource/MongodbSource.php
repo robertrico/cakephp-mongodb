@@ -1316,7 +1316,7 @@ class MongodbSource extends DboSource {
  * @return mixed Prepared value or array of values.
  * @access public
  */
-	public function value($data, $column = null) {
+	public function value($data, $column = null,$null=true) {
 		if (is_array($data) && !empty($data)) {
 			return array_map(
 				array(&$this, 'value'),
@@ -1473,7 +1473,7 @@ class MongodbSource extends DboSource {
 	public function logQuery($query, $args = array()) {
 		if ($args) {
 			$this->_stringify($args);
-			$query = String::insert($query, $args);
+			$query = CakeText::insert($query, $args);
 		}
 		$this->took = round((microtime(true) - $this->_startTime) * 1000, 0);
 		$this->affected = null;
