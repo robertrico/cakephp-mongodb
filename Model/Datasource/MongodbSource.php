@@ -1096,7 +1096,7 @@ class MongodbSource extends DboSource {
 			if ($Model->findQueryType === 'count' && $fields == array('count' => true)) {
 				$cursor = $this->_db
 					->selectCollection($table)
-					->find($conditions, array('_id' => true));
+					->find($conditions, array('_id' => true))->timeout(-1);
 				if (!empty($hint)) {
 					$cursor->hint($hint);
 				}
@@ -1115,6 +1115,7 @@ class MongodbSource extends DboSource {
 			$return = $this->_db
 				->selectCollection($table)
 				->find($conditions, $fields)
+				->timeout(-1)
 				->sort($order)
 				->limit($limit)
 				->skip($offset);
